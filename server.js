@@ -12,8 +12,12 @@ app.use(express.static('public'));
 // Root endpoint. Display index file
 app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'));
 
-// Display a temporary message at the GET /api/hello route
-app.get('/api/hello', (req, res) => res.json({ greeting: 'hello API' }));
+// Return info about the visiting user
+app.get('/api/whoami', (req, res) => res.json({
+    ipaddress: req.ip,
+    language: req.headers['accept-language'],
+    software: req.headers['user-agent']
+}));
 
 // Create a listener to handle requests
 const listener = app.listen(process.env.PORT, () => console.log('Your app is listening on port ' + listener.address().port));
